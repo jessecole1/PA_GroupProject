@@ -15,7 +15,7 @@ import com.example.twitter.Repositories.UserRepository;
 public class UserService {
 	
 	@Autowired
-	public UserRepository userRepo;
+	private UserRepository userRepo;
 	
 	public User register(User newUser, BindingResult result) {
 		
@@ -54,6 +54,16 @@ public class UserService {
 			return null;
 		}
 		return user;
+	}
+	
+	public User getById(Long id) {
+		Optional<User> potentialUser = userRepo.findById(id);
+		System.out.println(potentialUser);
+		if (potentialUser.isPresent()) {
+			User user = potentialUser.get();
+			return user;
+		}
+		return null;
 	}
 
 }

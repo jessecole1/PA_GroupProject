@@ -2,11 +2,14 @@ package com.example.twitter.Models;
 
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -46,6 +49,8 @@ public class User {
 	@Size(min=3, max=128, message="Bio must be between 3 and 128 characters long")
 	private String bio;
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<Tweet> tweets;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
@@ -101,6 +106,14 @@ public class User {
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public List<Tweet> getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(List<Tweet> tweets) {
+		this.tweets = tweets;
 	}
 
 	public Date getCreatedAt() {

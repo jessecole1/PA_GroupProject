@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="formBox">
-		<form:form class="theForm" action="#" method="post" modelAttribute="newUser">
+		<form:form class="theForm" action="/register/user" method="post" modelAttribute="newUser">
 			<div class="form">
 				<form:input class="inputFields" path="email" value="email"/>
 				<form:input class="inputFields" path="username" value="username"/>
