@@ -229,9 +229,53 @@ a:link {
 	color: white;
 }
 
+.heart {
+	font-size: 30px;
+	text-decoration: none;
+	color: white;
+}
 
+.oneTweetPage {
+	
+}
 
+.commentSection {
+	display: flex;
+	flex-direction: column;
+	flex: 7;
+}
 
+.commentLeft {
+	flex: 1;
+}
 
+.commentScroll {
+	display: flex;
+	flex-direction: row;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 
+.commentInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.commentContentPart {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	flex: 7;
+}
+
+.commentContentPart3 {
+	flex: 1;
+}
+
+.commentDiv {
+	display: flex;
+	flex-direction: row;
+}
 

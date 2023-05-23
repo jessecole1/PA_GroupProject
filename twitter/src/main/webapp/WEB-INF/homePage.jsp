@@ -3,6 +3,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isErrorPage="true" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +35,7 @@
 						<button class="tweetButton">Tweet</button>
 					</form:form>
 				</div>
-			</div>
+			</div>		
 			<div>
 				<div class="allTweets centerHome3Two">
 					<c:forEach var="tweet" items="${tweets}">
@@ -43,8 +44,11 @@
 							
 						</div>
 						<div class="oneTweet">
-							<p><c:out value="${tweet.user.username}"/> | <span class="tweetDate"><c:out value="${tweet.createdAt}"/></span></p>
-							<p><c:out value="${tweet.content}"/></p>
+							<p><c:out value="${tweet.user.username}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span></p>
+							<p><a href="/tweet/${tweet.id}"><span class="link"><c:out value="${tweet.content}"/></span></a></p>
+							<a href="/tweet/like/${tweet.id}"><span class="heart">&hearts;</span></a>
+							<c:out value="Likes: ${tweet.likeNum}"/>
+							<c:out value="Comments: ${tweet.commentNum}"/>
 						</div>
 					</div>
 					</c:forEach>

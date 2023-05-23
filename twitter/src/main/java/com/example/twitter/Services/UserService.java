@@ -58,7 +58,6 @@ public class UserService {
 	
 	public User getById(Long id) {
 		Optional<User> potentialUser = userRepo.findById(id);
-		System.out.println(potentialUser);
 		if (potentialUser.isPresent()) {
 			User user = potentialUser.get();
 			return user;

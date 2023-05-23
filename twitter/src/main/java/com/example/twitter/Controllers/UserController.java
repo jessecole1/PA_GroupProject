@@ -1,5 +1,7 @@
 package com.example.twitter.Controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -72,12 +74,16 @@ public class UserController {
 	@GetMapping("/home")
 	public String homePage(Model model, HttpSession session) {
 		Long userId = (Long) session.getAttribute("userId");
-		System.out.println(userId);
 		if (userId == null) {
 			return "redirect:/";
 		}
 		model.addAttribute("newTweet", new Tweet());
 		model.addAttribute("tweets", tweetServ.findAll());
+		model.addAttribute("newLike", new Tweet());
+		List<Tweet> tweets = tweetServ.findAll();
+		for (Tweet tweet : tweets) {
+			System.out.println(tweet.getLikes());
+		}
 		model.addAttribute("user", userServ.getById(userId));
 		return "homePage.jsp";
 	}

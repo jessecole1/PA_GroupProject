@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -51,6 +54,17 @@ public class User {
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Tweet> tweets;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="users_likes",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="tweet_id")
+	)
+	private List<Tweet> likedTweets;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<Comment> comments;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
@@ -114,6 +128,22 @@ public class User {
 
 	public void setTweets(List<Tweet> tweets) {
 		this.tweets = tweets;
+	}
+
+	public List<Tweet> getLikedTweets() {
+		return likedTweets;
+	}
+
+	public void setLikedTweets(List<Tweet> likedTweets) {
+		this.likedTweets = likedTweets;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public Date getCreatedAt() {
