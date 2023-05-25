@@ -39,5 +39,9 @@ public class TweetService {
 	public Comment addComment(Comment comment) {
 		return commentRepo.save(comment);
 	}
+	
+	public void destroyById(Long id) {
+		tweetRepo.deleteById(id);
+	}
 
 }

@@ -15,5 +15,9 @@ public class CommentService {
 	public Comment save(Comment comment) {
 		return commentRepo.save(comment);
 	}
+	
+	public void destroyById(Long id) {
+		commentRepo.deleteById(id);
+	}
 
 }

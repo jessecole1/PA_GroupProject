@@ -71,6 +71,37 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
+	public User update(User user) {
+		System.out.println("test 1");
+//		theUser.setBio(user.getBio());
+		return userRepo.save(user);
+//		System.out.println("testing line");
+	}
+//
+//		if(!BCrypt.checkpw(theUser.getPassword(), theUser.getPassword())) {
+////			System.out.println("1: " + theUser.getPassword());
+////			System.out.println("- - - - -");
+////			System.out.println("2: " + user.getPassword());
+//			System.out.println("testing bcrypt");
+//			result.rejectValue("password", "Matches", "Can't match email or password");
+//			return null;
+//		}
+//		if(!BCrypt.checkpw(theUser.getConfirm(), user.getConfirm())) {
+//			result.rejectValue("confirm", "Matches", "Can't match confirm");
+//		}
+//		System.out.println(result);
+//		if (result.hasErrors()) {
+//			System.out.println("testing if it gets to errors");
+//			return null;
+//		}
+//		System.out.println(user.getBio());
+//		theUser.setBio(user.getBio());
+//		System.out.println(theUser.getBio());
+//		
+//		return userRepo.save(theUser);
+//	}
+	
+	
 //	public void deleteComments(List<Comment> comments) {
 //		userRepo.deleteAll();
 //	}

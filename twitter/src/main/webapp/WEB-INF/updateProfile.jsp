@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Twitter</title>
+<title><c:out value="${user.username}"/>'s Profile</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -32,51 +32,49 @@
 		</div>
 		<div class="homeContent homeContent2">
 			<div class="centerHome1">
-				<h2>Home - <c:out value="${user.username}"/></h2>
+			<form:form action="/profile/update" method="update" modelAttribute="user">
+				<form:input type="hidden" path="id" value="${user.id}"/>
+				<h2>Username: <form:input type="text" value="${user.username}" path="username"/></h2>
+				<div>
+					<form:input type="hidden" path="password"/>
+					<p>Bio: <form:textarea value="${user.bio}" path="bio"/></p>
+					<p>Email: <form:input type="text" value="${user.email}" path="email"/></p>
+					<p><form:input type="text" path="confirm" placeholder="password"/>
+				</div>
+				<button>Update</button>
+			</form:form>
 			</div>
 			<div class="centerHome2">
  				<div class="centerHome2One">
-
+ 				
 				</div> 
 				<div class="centerHome2Two">
-					<form:form action="/tweet/new" method="post" modelAttribute="newTweet">
-						<form:input type="hidden" path="user" value="${user.id}"/>
-						<form:textarea placeholder="What's Happening?" class="newTweet" path="content"/>
-						<button class="tweetButton">Tweet</button>
-					</form:form>
+					<c:forEach var="tweet" items="${profileUser.tweets}">
+					<div class="profileUsersTweets">
+						<div>
+							<p style="color: white"><span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/> | </span><span style="font-size: 150%;"><c:out value="${tweet.content}"/></span></p>
+						</div>
+						<div>
+							<hr style="width: 85%; margin: 0 auto; border-bottom: 1px solid rgb(47,51,54); margin-top: 15px; margin-bottom: 15px;"/>
+							<p style="display: flex; flex-direction: row; justify-content: space-evenly">
+								<span class="heart">&hearts;<c:out value="${tweet.likeNum}"/></span>
+								<span class="heart"><c:out value="Comments: ${tweet.commentNum}"/></span>
+							</p>
+						</div>
+					</div>
+					</c:forEach>
 				</div>
 			</div>		
 			<div>
 				<div class="allTweets centerHome3Two">
-					<c:forEach var="tweet" items="${tweets}">
-					<div class="centerHome3">
-						<div class="centerHome3One">
-							
-						</div>
-						<div class="oneTweet">
-							<div class="tweetUserInfo">
-								<p><c:out value="${tweet.user.username}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span></p>	
-<%-- 							<c:choose>
-							<c:when test="${tweet.user.id == user.id}">
-								<form:form action="/tweet/delete/${tweet.id}" method="post" modelAttribute="newTweet">
-									<button><i class="material-icons" style="color:white; border: none;">delete</i></button>
-								</form:form>					
-							</c:when>
-							</c:choose> --%>
-							</div>
-							<p><a href="/tweet/${tweet.id}"><span class="link"><c:out value="${tweet.content}"/></span></a></p>
-							<a href="/tweet/like/${tweet.id}"><span class="heart">&hearts;</span></a>
-							<c:out value="Likes: ${tweet.likeNum}"/>
-							<c:out value="Comments: ${tweet.commentNum}"/>
-						</div>
-					</div>
-					</c:forEach>
+				
 				</div>
 			</div>
 		</div>
 		<div class="homeContent homeContent3">
 			<div class="rightSide">
 				<a href="/logout"><button class="logoutButton">Logout</button></a>
+				<a href="#">Update Profile</a>
 			</div>
 		</div>
 	</div>

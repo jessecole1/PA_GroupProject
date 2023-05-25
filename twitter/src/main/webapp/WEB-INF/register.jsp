@@ -14,10 +14,14 @@
 	<div class="formBox">
 		<form:form class="theForm" action="/register/user" method="post" modelAttribute="newUser">
 			<div class="form">
-				<form:input class="inputFields" path="email" value="email"/>
-				<form:input class="inputFields" path="username" value="username"/>
-				<form:input class="inputFields" path="password" value="password"/>
-				<form:input class="inputFields" path="confirm" value="confirm password"/>
+				<form:input class="inputFields" path="email" placeholder="Email" style="padding-left: 5px;"/>
+				<form:errors path="email" class="errors"/>
+				<form:input class="inputFields" path="username" placeholder="Username" style="padding-left: 5px;"/>
+				<form:errors path="username" class="errors"/>
+				<form:input type="password" class="inputFields" path="password" placeholder="Password" style="padding-left: 5px;"/>
+				<form:errors class="errors" path="password"/>
+				<form:input type="password" class="inputFields" path="confirm" placeholder="Confirm" style="padding-left: 5px;"/>
+				<form:errors class="errors" path="confirm"/>
 				<button class="button register">Create Account</button>
 			</div>
 		</form:form>

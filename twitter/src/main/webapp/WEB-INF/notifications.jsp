@@ -46,9 +46,10 @@
 											</c:when>
 										</c:choose>
 										<div class="notificationList notiCenterRight">
-											<p class="notificationComments"><span style="text-decoration: underline"><c:out value="${comment.user.username}"/></span> commented: <c:out value="${comment.content}"/> on <fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></p>		
-											<br>				
-											<p style="font-size: 30px;" class="notificationComments">Your Tweet: <c:out value="${tweet.content}"/>
+											<div class="notiCenterRightTop">
+												<p class="notificationComments"><span style="text-decoration: underline"><c:out value="${comment.user.username}"/> commented: </span> <c:out value="${comment.content}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span></p>		
+											</div>				
+											<p style="font-size: 30px;" class="notificationComments">Your Tweet: <c:out value="${tweet.content}"/></p>
 										</div>
 									</div>
 									</c:forEach>				

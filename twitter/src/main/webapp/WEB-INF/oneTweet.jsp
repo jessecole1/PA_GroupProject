@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title><c:out value="${tweet.user.username}"/>'s Tweet</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <body>
@@ -57,6 +58,15 @@
 						<p>
 							Comments: <c:out value="${tweet.commentNum}"/>
 						</p>
+						<c:choose>
+						<c:when test="${tweet.user.id == user.id}">
+						<p>
+							<form:form action="/tweet/delete/${tweet.id}" method="post" modelAttribute="newTweet">
+								<button style="border: none; background-color: black; color: white;"><i class="material-icons">delete</i></button>
+							</form:form>
+						</p>
+						</c:when>
+						</c:choose>
 					</div>
 					<hr style="width: 90%; margin: 0 auto; border-color: rgb(47,51,54)">
 					<div>
@@ -75,7 +85,7 @@
 								
 							</div>
 							<div class="commentSection">
-								<p><c:out value="${comment.user.username}"/> | <fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/>
+								<p><c:out value="${comment.user.username}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span>
 								<p><c:out value="${comment.content}"/></p>
 							</div>
 						</div>

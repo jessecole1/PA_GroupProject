@@ -1,7 +1,6 @@
 package com.example.twitter.Controllers;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.twitter.Models.Comment;
@@ -37,8 +37,6 @@ public class UserController {
 	
 	@GetMapping("/")
 	public String loginOrReg(Model model) {
-//		model.addAttribute("newUser", new User());
-//		model.addAttribute("newLoginUser", new LoginUser());
 		return "index.jsp";
 	}
 	
@@ -95,24 +93,7 @@ public class UserController {
 		
 		List<Tweet> tweets = tweetServ.findAll();
 		
-//		ArrayList<Long> orderedTweets = new ArrayList<Long>();
-//		List<Tweet> orderedList = new ArrayList<>();
-//		
-//		for (Tweet tweet : tweets) {
-//			orderedTweets.add(tweet.getId());
-//		}
-//		orderedTweets.sort(Comparator.reverseOrder());
-//		for (Long i = Long.valueOf(0); i < orderedTweets.size(); i++) {
-//			Tweet aTweet = tweetServ.findById(i);
-//			if (aTweet != null) {
-//				orderedList.add(aTweet);
-//			}
-//		}
-		
 		model.addAttribute("tweets", tweetServ.findAll());
-//		model.addAttribute("tweets", orderedList);
-		
-		
 		
 		User user = userServ.getById(userId);
 		
@@ -152,15 +133,6 @@ public class UserController {
 		model.addAttribute("user", userServ.getById(userId));
 		model.addAttribute("userTweets", tweets);
 		User user = userServ.getById(userId);
-//		List<Tweet> tweets = tweetServ.findAll();
-//		for (Tweet tweet : tweets) {
-//			List<Comment> tweetComments = tweet.getComments();
-//			for (Comment com : tweetComments) {
-//				com.setNotified(true);
-//				System.out.println(com.getContent());
-//				commentServ.save(com);
-//			}
-//		}
 		return "notifications.jsp";
 	}
 	
@@ -176,9 +148,6 @@ public class UserController {
 		model.addAttribute("newUser", new User());
 		
 		List<Tweet> tweets = tweetServ.findAll();
-//		for (Tweet tweet : tweets) {
-//			System.out.println(tweet.getLikes());
-//		}
 		User user = userServ.getById(userId);
 		
 		List<Comment> unnotifiedComments = new ArrayList<Comment>();
@@ -197,16 +166,38 @@ public class UserController {
 		return "homePage.jsp";
 	}
 	
-//	@PostMapping("/user/notifications")
-//	public String getNotifications(Model model, HttpSession session) {
-//		Long userId = (Long) session.getAttribute("userId");
-//		if (userServ.getById(userId) == null) {
-//			return "redirect:/";
-//		}
-//		model.addAttribute("user", userServ.getById(userId));
-//		model.addAttribute("userTweets", tweetServ.findAll());
-//		User user = userServ.getById(userId);
-//
-//		return "redirect:/user/notifications";
-//	}
+	@GetMapping("/user/profile/{usersId}")
+	public String userProfile(@PathVariable("usersId") Long userId, Model model, HttpSession session) {
+		Long theUserId = (Long) session.getAttribute("userId");
+		if (userServ.getById(theUserId) == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("profileUser", userServ.getById(userId));
+		model.addAttribute("user", userServ.getById(theUserId));
+		return "userProfile.jsp";
+	}
+	
+	@GetMapping("/user/profile/update")
+	public String updateProfile(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+		Long theUserId = (Long) session.getAttribute("userId");
+		if (userServ.getById(theUserId) == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("user", userServ.getById(theUserId));
+		return "updateProfile.jsp";
+	}
+	
+	@PostMapping("/profile/update")
+	public String update(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+		Long theUserId = (Long) session.getAttribute("userId");
+		if (userServ.getById(theUserId) == null) {
+			return "redirect:/";
+		}
+		
+		User aUser = userServ.getById(user.getId());
+		aUser.setBio(user.getBio());
+		System.out.println("user bio: " + user.getBio());
+		userServ.update(user);
+		return "redirect:/home";
+	}
 }

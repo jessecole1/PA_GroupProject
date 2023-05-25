@@ -1,7 +1,5 @@
 package com.example.twitter.Controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.twitter.Models.Comment;
 import com.example.twitter.Models.Tweet;
 import com.example.twitter.Models.User;
+import com.example.twitter.Services.CommentService;
 import com.example.twitter.Services.TweetService;
 import com.example.twitter.Services.UserService;
 
@@ -28,6 +27,9 @@ public class TweetController {
 	
 	@Autowired
 	private UserService userServ;
+	
+	@Autowired
+	private CommentService commentServ;
 	
 	@PostMapping("/tweet/new")
 	public String createTweet(@Valid @ModelAttribute("newTweet") Tweet newTweet, 
@@ -63,6 +65,9 @@ public class TweetController {
 			}
 		}
 		if (liked == true) {
+			tweet.getLikes().remove(user);
+			tweet.setLikeNum(tweet.getLikeNum()-1);
+			tweetServ.save(tweet);
 			return "redirect:/home";
 		}
 		tweet.getLikes().add(user);
@@ -88,22 +93,6 @@ public class TweetController {
 		tweetServ.findById(tweetId).setCommentNum(theComment);
 		tweetServ.save(tweetServ.findById(tweetId));
 		
-		
-//		
-//		Tweet aTweet = newComment.getTweet();
-//		User aUser = aTweet.getUser();
-//		aUser.getNotificationNum();
-//		System.out.println(aUser.getNotificationNum());
-//		Integer notiNum = aUser.getNotificationNum() + 1;
-//		aUser.setNotificationNum(notiNum);
-//		userServ.save(aUser);
-//		notiNum++;
-//		aUser.setNotificationNum(notiNum);
-//		System.out.println(aUser.getNotificationNum());
-//		userServ.save(aUser);
-//		
-//		System.out.println(aUser.getUsername());
-//		tweetServ.save(aTweet);
 		model.addAttribute("newTweet", new Tweet());
 		model.addAttribute("newComment", new Comment());
 		return "redirect:/tweet/{tweetId}";
@@ -119,6 +108,22 @@ public class TweetController {
 		model.addAttribute("user", userServ.getById(userId));
 		model.addAttribute("newComment", new Comment());
 		return "oneTweet.jsp";
+	}
+	
+	@PostMapping("/tweet/delete/{tweetId}")
+	public String deleteTweet(@PathVariable("tweetId") Long tweetId, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userServ.getById(userId) == null) {
+			return "redirect:/home";
+		}
+		Tweet tweet = tweetServ.findById(tweetId);
+		for (Comment comm : tweet.getComments()) {
+			commentServ.destroyById(comm.getId());
+		}
+		
+		tweetServ.destroyById(tweetId);
+		
+		return "redirect:/home";
 	}
 	
 }
