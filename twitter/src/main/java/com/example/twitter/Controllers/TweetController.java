@@ -1,5 +1,7 @@
 package com.example.twitter.Controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -79,11 +81,29 @@ public class TweetController {
 		if (result.hasErrors()) {
 			return "redirect:/home";
 		}
+		newComment.setNotified(false);
 		tweetServ.addComment(newComment);
 		Integer theComment = tweetServ.findById(tweetId).getCommentNum();
 		theComment++;
 		tweetServ.findById(tweetId).setCommentNum(theComment);
 		tweetServ.save(tweetServ.findById(tweetId));
+		
+		
+//		
+//		Tweet aTweet = newComment.getTweet();
+//		User aUser = aTweet.getUser();
+//		aUser.getNotificationNum();
+//		System.out.println(aUser.getNotificationNum());
+//		Integer notiNum = aUser.getNotificationNum() + 1;
+//		aUser.setNotificationNum(notiNum);
+//		userServ.save(aUser);
+//		notiNum++;
+//		aUser.setNotificationNum(notiNum);
+//		System.out.println(aUser.getNotificationNum());
+//		userServ.save(aUser);
+//		
+//		System.out.println(aUser.getUsername());
+//		tweetServ.save(aTweet);
 		model.addAttribute("newTweet", new Tweet());
 		model.addAttribute("newComment", new Comment());
 		return "redirect:/tweet/{tweetId}";

@@ -17,7 +17,7 @@
 		<div class="homeContent homeContent1">
 			<div class="leftHome1">
 				<a href="/home"><p class="link">Home</p></a>
-				<a href="#"><p class="link">Notifications</p></a>
+				<a href="/user/notifications"><p class="link">Notifications</p></a>
 				<a href="#"><p class="link">Profile</p></a>
 			</div>
 		</div>
@@ -86,7 +86,9 @@
 			</div>
 		</div>
 		<div class="homeContent homeContent3">
-		
+			<div class="rightSide">
+				<a href="/logout"><button class="logoutButton">Logout</button></a>
+			</div>
 		</div>
 	</div>
 </body>

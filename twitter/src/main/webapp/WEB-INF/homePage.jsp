@@ -16,13 +16,22 @@
 		<div class="homeContent homeContent1">
 			<div class="leftHome1">
 				<a href="/home"><p class="link">Home</p></a>
-				<a href="#"><p class="link">Notifications</p></a>
+				<a href="/user/notifications"><p class="link">Notifications 
+				<c:choose>
+				<c:when test="${count == 0}">
+					
+				</c:when>
+				<c:otherwise>
+					<span class="notificationBox"><c:out value="${count}"/></span>
+				</c:otherwise>
+				</c:choose>
+				</p></a>
 				<a href="#"><p class="link">Profile</p></a>
 			</div>
 		</div>
 		<div class="homeContent homeContent2">
 			<div class="centerHome1">
-				<h2>Home</h2>
+				<h2>Home - <c:out value="${user.username}"/></h2>
 			</div>
 			<div class="centerHome2">
  				<div class="centerHome2One">
@@ -56,7 +65,9 @@
 			</div>
 		</div>
 		<div class="homeContent homeContent3">
-		
+			<div class="rightSide">
+				<a href="/logout"><button class="logoutButton">Logout</button></a>
+			</div>
 		</div>
 	</div>
 </body>

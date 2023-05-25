@@ -12,12 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -65,6 +67,12 @@ public class User {
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Comment> comments;
+	
+//	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+//	private List<Comment> commentNotifications;
+	
+	@Min(0)
+	private Integer notificationNum;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
@@ -145,6 +153,22 @@ public class User {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
+	public Integer getNotificationNum() {
+		return notificationNum;
+	}
+
+	public void setNotificationNum(Integer notificationNum) {
+		this.notificationNum = notificationNum;
+	}
+
+//	public List<Comment> getCommentNotifications() {
+//		return commentNotifications;
+//	}
+//
+//	public void setCommentNotifications(List<Comment> commentNotifications) {
+//		this.commentNotifications = commentNotifications;
+//	}
 
 	public Date getCreatedAt() {
 		return createdAt;

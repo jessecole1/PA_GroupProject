@@ -21,7 +21,6 @@ public class TweetService {
 	private CommentRepository commentRepo;
 	
 	public Tweet save(Tweet newTweet) {
-		System.out.println("fail");
 		return tweetRepo.save(newTweet);
 	}
 	

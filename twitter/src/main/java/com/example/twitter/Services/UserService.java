@@ -1,5 +1,6 @@
 package com.example.twitter.Services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import com.example.twitter.Models.Comment;
 import com.example.twitter.Models.LoginUser;
 import com.example.twitter.Models.User;
 import com.example.twitter.Repositories.UserRepository;
@@ -64,5 +66,13 @@ public class UserService {
 		}
 		return null;
 	}
+	
+	public User save(User user) {
+		return userRepo.save(user);
+	}
+	
+//	public void deleteComments(List<Comment> comments) {
+//		userRepo.deleteAll();
+//	}
 
 }

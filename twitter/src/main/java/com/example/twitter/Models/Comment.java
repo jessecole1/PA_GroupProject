@@ -40,6 +40,10 @@ public class Comment {
 	@JoinColumn(name="tweet_id")
 	private Tweet tweet;
 	
+
+	@NotNull
+	private boolean notified = false;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
 	
@@ -54,6 +58,14 @@ public class Comment {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public boolean isNotified() {
+		return notified;
+	}
+	
+	public void setNotified(boolean notified) {
+		this.notified = notified;
 	}
 
 	public String getContent() {
@@ -79,7 +91,7 @@ public class Comment {
 	public void setTweet(Tweet tweet) {
 		this.tweet = tweet;
 	}
-	
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
