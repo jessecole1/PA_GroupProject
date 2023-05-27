@@ -50,8 +50,8 @@ public class UserController {
 	public String registerUser(@Valid @ModelAttribute("newUser") User newUser, 
 			BindingResult result, Model model, HttpSession session) {
 		if (result.hasErrors()) {
-			model.addAttribute("newUser", new User());
-			return "redirect:/register";
+//			model.addAttribute("newUser", new User());
+			return "register.jsp";
 		}
 		userServ.register(newUser, result);
 		newUser.setNotificationNum(0);
@@ -71,8 +71,8 @@ public class UserController {
 			BindingResult result, Model model, HttpSession session) {
 		User user = userServ.login(newLogin, result);
 		if (result.hasErrors()) {
-			model.addAttribute("newLoginUser", new LoginUser());
-			return "redirect:/login";
+//			model.addAttribute("newLoginUser", new LoginUser());
+			return "login.jsp";
 		}
 		session.setAttribute("userId", user.getId());
 		return "redirect:/home";

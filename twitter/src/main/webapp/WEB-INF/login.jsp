@@ -14,10 +14,10 @@
 	<div class="formBox">
 		<form:form class="theForm" action="/login/user" method="post" modelAttribute="newLoginUser">
 			<div class="form">
-				<form:errors class="errors" path="email"/>
-				<form:errors class="errors" path="password"/>
 				<form:input class="inputFields" path="email" placeholder="Email" style="padding-left: 5px;"/>
+				<form:errors class="errors" path="email"/>
 				<form:input type="password" class="inputFields" path="password" placeholder="Password" style="padding-left: 5px;"/>
+				<form:errors class="errors" path="password"/>
 				<button class="button register">Log In</button>
 			</div>
 		</form:form>

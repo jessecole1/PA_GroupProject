@@ -22,17 +22,22 @@ public class UserService {
 	public User register(User newUser, BindingResult result) {
 		
 		Optional<User> potentialUser = userRepo.findByEmail(newUser.getEmail());
+		System.out.println(potentialUser);
 		if(potentialUser.isPresent()) {
 			result.rejectValue("email", "Matches", "Email already taken");
+			System.out.println("testing the result");
+			return null;
 		}
 		Optional<User> potentialUserTwo = userRepo.findByUsername(newUser.getUsername());
 		if(potentialUserTwo.isPresent()) {
 			result.rejectValue("username", "Matches", "Username already taken");
+			return null;
 		}
 		if(!newUser.getPassword().equals(newUser.getConfirm())) {
 			result.rejectValue("password", "Matches", "Make sure passwords are matched");
 		}
 		if(result.hasErrors()) {
+			System.out.println("testing here");
 			return null;
 		}
 		

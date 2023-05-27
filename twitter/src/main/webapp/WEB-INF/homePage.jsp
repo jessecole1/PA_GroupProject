@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isErrorPage="true" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isErrorPage="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,10 +40,13 @@
 
 				</div> 
 				<div class="centerHome2Two">
-					<form:form action="/tweet/new" method="post" modelAttribute="newTweet">
+					<form:form action="/tweet/new" method="POST" modelAttribute="newTweet">
 						<form:input type="hidden" path="user" value="${user.id}"/>
 						<form:textarea placeholder="What's Happening?" class="newTweet" path="content"/>
+							<form:errors style="color: red;" path="content" class="errors"/>
 						<button class="tweetButton">Tweet</button>
+						<div>
+						</div>
 					</form:form>
 				</div>
 			</div>		

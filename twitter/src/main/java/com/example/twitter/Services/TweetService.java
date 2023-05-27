@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import com.example.twitter.Models.Comment;
 import com.example.twitter.Models.Tweet;
@@ -20,7 +21,17 @@ public class TweetService {
 	@Autowired
 	private CommentRepository commentRepo;
 	
-	public Tweet save(Tweet newTweet) {
+	public Tweet save(Tweet newTweet, BindingResult result) {
+		if (result.hasErrors()) {
+			result.rejectValue("content", "Matches", "Tweet must be at least 3 characters");
+		}
+		if (result.hasErrors()) {
+			return null;
+		}
+		return tweetRepo.save(newTweet);
+	}
+	
+	public Tweet saveLike(Tweet newTweet) {
 		return tweetRepo.save(newTweet);
 	}
 	
@@ -42,6 +53,10 @@ public class TweetService {
 	
 	public void destroyById(Long id) {
 		tweetRepo.deleteById(id);
+	}
+	
+	public Tweet update(Tweet tweet) {
+		return tweetRepo.save(tweet);
 	}
 
 }

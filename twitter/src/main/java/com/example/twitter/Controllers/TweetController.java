@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.example.twitter.Models.Comment;
 import com.example.twitter.Models.Tweet;
@@ -44,7 +45,8 @@ public class TweetController {
 		}
 		newTweet.setLikeNum(0);
 		newTweet.setCommentNum(0);
-		tweetServ.save(newTweet);
+		System.out.println(newTweet.getCommentNum());
+		tweetServ.save(newTweet, result);
 		return "redirect:/home";
 	}
 	
@@ -67,12 +69,12 @@ public class TweetController {
 		if (liked == true) {
 			tweet.getLikes().remove(user);
 			tweet.setLikeNum(tweet.getLikeNum()-1);
-			tweetServ.save(tweet);
+			tweetServ.saveLike(tweet);
 			return "redirect:/home";
 		}
 		tweet.getLikes().add(user);
 		tweet.setLikeNum(tweet.getLikeNum()+1);
-		tweetServ.save(tweet);
+		tweetServ.saveLike(tweet);
 		return "redirect:/home";
 	}
 	
@@ -91,7 +93,7 @@ public class TweetController {
 		Integer theComment = tweetServ.findById(tweetId).getCommentNum();
 		theComment++;
 		tweetServ.findById(tweetId).setCommentNum(theComment);
-		tweetServ.save(tweetServ.findById(tweetId));
+		tweetServ.save(tweetServ.findById(tweetId), result);
 		
 		model.addAttribute("newTweet", new Tweet());
 		model.addAttribute("newComment", new Comment());
@@ -123,6 +125,30 @@ public class TweetController {
 		
 		tweetServ.destroyById(tweetId);
 		
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/tweet/edit/{tweetId}")
+	public String editTweet(@ModelAttribute("newTweet") Tweet tweet, @PathVariable("tweetId") Long tweetId, Model model, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userServ.getById(userId) == null) {
+			return "redirect:/home";
+		}
+		model.addAttribute("tweet", tweetServ.findById(tweetId));
+		model.addAttribute("user", userServ.getById(userId));
+		return "editTweet.jsp";
+	}
+	
+	@PutMapping("/update/{id}/tweet")
+	public String updateTweet(@Valid @ModelAttribute("newTweet") Tweet newTweet, BindingResult result, HttpSession session) {
+		Long userId = (Long) session.getAttribute("userId");
+		if (userServ.getById(userId) == null) {
+			return "redirect:/home";
+		}
+		if (result.hasErrors()) {
+			return "editTweet.jsp";
+		}
+		tweetServ.update(newTweet);
 		return "redirect:/home";
 	}
 	

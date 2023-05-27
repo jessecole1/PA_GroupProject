@@ -65,6 +65,9 @@
 								<button style="border: none; background-color: black; color: white;"><i class="material-icons">delete</i></button>
 							</form:form>
 						</p>
+						<p>
+							<a href="/tweet/edit/${tweet.id}">Edit</a>
+						</p>
 						</c:when>
 						</c:choose>
 					</div>
