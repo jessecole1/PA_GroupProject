@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -20,7 +21,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -73,6 +73,32 @@ public class User {
 	
 	@Min(0)
 	private Integer notificationNum;
+	
+//	@ManyToMany(fetch=FetchType.LAZY)
+//	@JoinTable(
+//			name="user_followed_user",
+//			joinColumns=@JoinColumn(name="user_id"),
+//			inverseJoinColumns=@JoinColumn(name="followedUser_id")
+//	)
+//	private List<User> followedUsers;
+//	
+//	@ManyToMany(fetch=FetchType.LAZY)
+//	@JoinTable(
+//			name="user_followed_user",
+//			joinColumns=@JoinColumn(name="followedUser_id"),
+//			inverseJoinColumns=@JoinColumn(name="user_id")
+//	)
+//	private List<User> followers;
+	
+	@OneToMany(mappedBy="to", fetch=FetchType.LAZY)
+	private List<FollowRelationship> followers;
+	
+	@OneToMany(mappedBy="from", fetch=FetchType.LAZY)
+	private List<FollowRelationship> usersFollowed;
+	
+//	@ManyToOne(fetch=FetchType.LAZY)
+//	@JoinColumn(name="follower_id")	private List<User> followers;
+	
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
@@ -169,6 +195,31 @@ public class User {
 //	public void setCommentNotifications(List<Comment> commentNotifications) {
 //		this.commentNotifications = commentNotifications;
 //	}
+
+//	public List<User> getFollows() {
+//		return follows;
+//	}
+//
+//	public void setFollows(List<User> follows) {
+//		this.follows = follows;
+//	}
+
+
+	public List<FollowRelationship> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<FollowRelationship> followers) {
+		this.followers = followers;
+	}
+
+	public List<FollowRelationship> getFollowing() {
+		return usersFollowed;
+	}
+
+	public void setFollowing(List<FollowRelationship> usersFollowed) {
+		this.usersFollowed = usersFollowed;
+	}
 
 	public Date getCreatedAt() {
 		return createdAt;

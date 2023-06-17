@@ -30,33 +30,62 @@
 				<a href="/user/profile/${user.id}"><p class="link">Profile</p></a>
 			</div>
 		</div>
-		<div class="homeContent homeContent2">
-			<div class="centerHome1">
-				<h2>Profile - <c:out value="${profileUser.username}"/></h2>
-				<div>
-					<p>Bio: <c:out value="${profileUser.bio}"/></p>
+		<div class="homeContent homeContent2 homeProfileHead">
+			<div class="profileUsersTopInfo">
+				<div class="profileCenterHome1">
+					<h2>Profile - <c:out value="${profileUser.username}"/></h2>
+					<div>
+						<p><a href="/user/follows/${profileUser.id}">Following: </a></p>
+					</div>
+					<div>
+						<p>Bio: <c:out value="${profileUser.bio}"/></p>
+						<img class="profileImg2" src="<c:url value='/img/user.svg' />" alt="Image" />
+					</div>
+				</div>
+				<div class="followUnfollow">
+					<c:choose>
+						<c:when test="${profileUser.id != user.id}">
+							<%-- <c:choose> --%>
+								<%-- <c:when test="${isFollowing == true}"> --%>
+							<%-- 		<form:form action="/user/unfollow/${profileUser.id}" method="post" modelAttribute="aUser">
+										<button class="logoutButton">Unfollow</button>
+									</form:form> --%>
+									<form:form action="/user/follow/${profileUser.id}" method="post" modelAttribute="aUser">
+										<button class="logoutButton">Follow</button>
+									</form:form>						
+								</c:when>
+								<%-- <c:otherwise> --%>
+								<%-- </c:otherwise> --%>
+							<%-- </c:choose> --%>
+						<%-- </c:when> --%>
+					</c:choose>
 				</div>
 			</div>
-			<div class="centerHome2">
- 				<div class="centerHome2One">
- 				
-				</div> 
-				<div class="centerHome2Two">
-					<c:forEach var="tweet" items="${profileUser.tweets}">
-					<div class="profileUsersTweets">
-						<div>
-							<p style="color: white"><span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/> | </span><span style="font-size: 150%;"><c:out value="${tweet.content}"/></span></p>
+			<div class="profileUserTweetsColumn">
+				<c:forEach var="tweet" items="${profileUser.tweets}">
+					<div class="centerHome3">
+						<div class="centerHome3One">
+							<a href="/user/profile/${tweet.user.id}"><c:out value="${tweet.user.username}"/></a>
+							<p><img class="profileImg" src="<c:url value='/img/user.svg' />" alt="Image" /></p>
 						</div>
-						<div>
-							<hr style="width: 85%; margin: 0 auto; border-bottom: 1px solid rgb(47,51,54); margin-top: 15px; margin-bottom: 15px;"/>
-							<p style="display: flex; flex-direction: row; justify-content: space-evenly">
-								<span class="heart">&hearts;<c:out value="${tweet.likeNum}"/></span>
-								<span class="heart"><c:out value="Comments: ${tweet.commentNum}"/></span>
-							</p>
+						<div class="oneTweet">
+							<div class="tweetUserInfo">
+								<p><c:out value="${tweet.user.username}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span></p>	
+<%-- 							<c:choose>
+							<c:when test="${tweet.user.id == user.id}">
+								<form:form action="/tweet/delete/${tweet.id}" method="post" modelAttribute="newTweet">
+									<button><i class="material-icons" style="color:white; border: none;">delete</i></button>
+								</form:form>					
+							</c:when>
+							</c:choose> --%>
+							</div>
+							<p><a href="/tweet/${tweet.id}"><span class="link"><c:out value="${tweet.content}"/></span></a></p>
+							<a href="/tweet/like/${tweet.id}"><span class="heart">&hearts;</span></a>
+							<p style="color: white"><c:out value="Likes: ${tweet.likeNum}"/>
+							<c:out value="Comments: ${tweet.commentNum}"/></p>
 						</div>
 					</div>
-					</c:forEach>
-				</div>
+				</c:forEach>
 			</div>		
 			<div>
 				<div class="allTweets centerHome3Two">

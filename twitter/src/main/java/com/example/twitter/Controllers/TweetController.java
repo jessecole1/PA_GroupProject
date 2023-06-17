@@ -45,7 +45,6 @@ public class TweetController {
 		}
 		newTweet.setLikeNum(0);
 		newTweet.setCommentNum(0);
-		System.out.println(newTweet.getCommentNum());
 		tweetServ.save(newTweet, result);
 		return "redirect:/home";
 	}
@@ -88,7 +87,13 @@ public class TweetController {
 		if (result.hasErrors()) {
 			return "redirect:/home";
 		}
-		newComment.setNotified(false);
+		
+		if (newComment.getTweet().getUser().getId() == newComment.getUser().getId()) {
+			newComment.setNotified(true);			
+		} else {
+			newComment.setNotified(false);
+		}
+		
 		tweetServ.addComment(newComment);
 		Integer theComment = tweetServ.findById(tweetId).getCommentNum();
 		theComment++;
@@ -113,7 +118,9 @@ public class TweetController {
 	}
 	
 	@PostMapping("/tweet/delete/{tweetId}")
-	public String deleteTweet(@PathVariable("tweetId") Long tweetId, Model model, HttpSession session) {
+	public String deleteTweet(@PathVariable("tweetId") Long tweetId, 
+		Model model, HttpSession session) {
+		
 		Long userId = (Long) session.getAttribute("userId");
 		if (userServ.getById(userId) == null) {
 			return "redirect:/home";
@@ -140,7 +147,8 @@ public class TweetController {
 	}
 	
 	@PutMapping("/update/{id}/tweet")
-	public String updateTweet(@Valid @ModelAttribute("newTweet") Tweet newTweet, BindingResult result, HttpSession session) {
+	public String updateTweet(@Valid @ModelAttribute("newTweet") Tweet newTweet, 
+		BindingResult result, HttpSession session) {
 		Long userId = (Long) session.getAttribute("userId");
 		if (userServ.getById(userId) == null) {
 			return "redirect:/home";

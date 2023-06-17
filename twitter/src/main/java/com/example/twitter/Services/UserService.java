@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.example.twitter.Models.Comment;
+import com.example.twitter.Models.FollowRelationship;
 import com.example.twitter.Models.LoginUser;
 import com.example.twitter.Models.User;
+import com.example.twitter.Repositories.FollowRelationshipRepository;
 import com.example.twitter.Repositories.UserRepository;
 
 @Service
@@ -19,14 +20,14 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepo;
 	
+	@Autowired
+	private FollowRelationshipRepository followRepo;
+	
 	public User register(User newUser, BindingResult result) {
 		
 		Optional<User> potentialUser = userRepo.findByEmail(newUser.getEmail());
-		System.out.println(potentialUser);
 		if(potentialUser.isPresent()) {
 			result.rejectValue("email", "Matches", "Email already taken");
-			System.out.println("testing the result");
-			return null;
 		}
 		Optional<User> potentialUserTwo = userRepo.findByUsername(newUser.getUsername());
 		if(potentialUserTwo.isPresent()) {
@@ -37,12 +38,12 @@ public class UserService {
 			result.rejectValue("password", "Matches", "Make sure passwords are matched");
 		}
 		if(result.hasErrors()) {
-			System.out.println("testing here");
 			return null;
 		}
 		
 		String hashed = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
 		newUser.setPassword(hashed);
+		newUser.setNotificationNum(0);
 		return userRepo.save(newUser);
 	}
 	
@@ -77,38 +78,26 @@ public class UserService {
 	}
 	
 	public User update(User user) {
-		System.out.println("test 1");
-//		theUser.setBio(user.getBio());
 		return userRepo.save(user);
-//		System.out.println("testing line");
 	}
-//
-//		if(!BCrypt.checkpw(theUser.getPassword(), theUser.getPassword())) {
-////			System.out.println("1: " + theUser.getPassword());
-////			System.out.println("- - - - -");
-////			System.out.println("2: " + user.getPassword());
-//			System.out.println("testing bcrypt");
-//			result.rejectValue("password", "Matches", "Can't match email or password");
-//			return null;
-//		}
-//		if(!BCrypt.checkpw(theUser.getConfirm(), user.getConfirm())) {
-//			result.rejectValue("confirm", "Matches", "Can't match confirm");
-//		}
-//		System.out.println(result);
-//		if (result.hasErrors()) {
-//			System.out.println("testing if it gets to errors");
-//			return null;
-//		}
-//		System.out.println(user.getBio());
-//		theUser.setBio(user.getBio());
-//		System.out.println(theUser.getBio());
-//		
-//		return userRepo.save(theUser);
-//	}
 	
 	
-//	public void deleteComments(List<Comment> comments) {
-//		userRepo.deleteAll();
+	public void follow(User theUser, User followedUser) {
+		FollowRelationship newFollow = new FollowRelationship();
+		newFollow.setFrom(theUser);
+		newFollow.setTo(followedUser);
+		List<FollowRelationship> followedUsersByUser = theUser.getFollowing();
+		followedUsersByUser.add(newFollow);
+		theUser.setFollowing(followedUsersByUser);
+		System.out.println(followedUsersByUser);
+		userRepo.save(theUser);
+		followRepo.save(newFollow);
+	}
+//	
+//	public void unfollow(User theUser, User followedUser) {
+//		List<User> theUsersFollowList = theUser.getFollows();
+//		theUsersFollowList.remove(followedUser);
+//		userRepo.save(theUser);
 //	}
-
+	
 }

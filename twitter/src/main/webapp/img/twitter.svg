@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg2" viewBox="0 0 250 218" version="1.1" inkscape:version="0.91 r13725">
+  <g id="layer1" transform="translate(0 -834.36)">
+    <path id="path2830" style="fill:#d5effa" d="m0.66921 834.36s-3.2344 19.766 4.5181 28.276c7.7525 8.5094 54.496 55.065 54.496 55.065s-2.2503 39.279 21.507 53.795c-8.2527 28.281-12.997 47.013-12.997 47.013-8.822-1.2102-12.635-0.3724-18.753 1.7963l1.3926 4.5836c4.7949-1.4057 9.7367-3.3412 17.113-1.5176 6.1318 8.0562 6.1676 19.882 5.5084 28.462l4.7347 0.5264c0.91632-10.25 0.50895-16.777-2.847-25.643 6.937 4.5421 10.608 9.7502 13.183 19.078l5.2917-1.6724c-5.2379-13.394-8.7699-17.566-20.858-24.312l13.245-44.288c6.8571 4.4186 14.236 6.7152 21.755 8.4859l-4.5181 28.555c-6.7604-1.0342-13.138-0.578-19.001 1.9821l1.3307 4.4906c5.0597-2.1453 11.89-3.0636 17.392-1.7962 5.8944 10.552 5.9105 18.31 5.3227 29.329l4.6419 0.5884c0.96554-10.754 0.79739-17.169-3.3112-27.192 6.8951 3.9469 11.122 8.7972 13.895 19.852l4.7657-1.2388c-3.0652-12.508-8.6809-18.713-19.774-24.528l4.7657-28.524s42.579 12.072 74.022-37.536c9.0963-14.351 14.223-23.64 22.25-30.599 16.735-14.508 40.287-15.89 40.261-15.702l-34.505-2.0131s-5.5124-7.4981-11.264-10.251c-5.7518-2.7531-15.237-6.2595-29.491 0.24776-14.255 6.5072-14.524 9.7572-25.778 15.764-11.254 6.0067-18.992 4.6176-28.501 3.4996-39.429-4.69-119.8-74.63-119.8-74.63zm185.02 60.7c4.2239 0 7.6436 3.4224 7.6436 7.6497 0 4.2272-3.4197 7.6497-7.6436 7.6497s-7.6436-3.4224-7.6436-7.6497c0-4.2272 3.4197-7.6497 7.6436-7.6497z"/>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Bird Icon</dc:title>
+        <dc:date>2010-07-01T19:00:35</dc:date>
+        <dc:description>Just the outline of one version of the Twitter Logo (traced from image)</dc:description>
+        <dc:source>https://openclipart.org/detail/69631/twitter-icon-by-jonah-bron</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jonah Bron</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>logo</rdf:li>
+            <rdf:li>tweet</rdf:li>
+            <rdf:li>twitter</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

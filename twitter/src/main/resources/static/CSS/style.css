@@ -149,6 +149,10 @@ body {
 	flex-direction: column;
 }
 
+.homeProfileHead {
+	height: 300px;
+}
+
 
 .centerHome1 {
 	color: white;
@@ -157,6 +161,17 @@ body {
 	padding-left: 15px;
 	padding-top: 20px;
 	padding-bottom: 60px;
+	/* flex: 1; */
+}
+
+.profileCenterHome1 {
+	color: white;
+	height: 100px;
+	border-bottom: 1px solid rgb(47,51,54);
+	padding-left: 15px;
+	padding-top: 20px;
+	padding-bottom: 60px;
+	flex: 1; 
 }
 
 .centerHome2 {
@@ -170,8 +185,28 @@ body {
 	border-right: 1px solid rgb(47,51,54);
 }
 
+.commentContentPart3 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.profileUsersTweets {
+	display: flex;
+	flex-direction: row;
+	border-bottom: 1px solid rgb(47,51,54);
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 .centerHome2Two {
 	flex: 7;
+}
+
+.profileUserTweetsColumn {
+	display: flex;
+	flex-direction: column;	
+	border-bottom: 1px solid rgb(47,51,54);
 }
 
 .homeContent3 {
@@ -271,8 +306,17 @@ a:link {
 	flex: 7;
 }
 
-.commentContentPart3 {
-	flex: 1;
+.commentContentPart4 {
+ 	/* flex: 1; */
+	display: flex;
+	flex-direction: row;
+	/* align-items: center; */
+	/* justify-content: center;  */
+}	
+
+.commentContentPart4 {
+	width: 70px;
+	height: 70px;
 }
 
 .commentDiv {
@@ -357,16 +401,43 @@ a:link {
 	justify-content: space-between;
 }
 
-.profileUsersTweets {
-	display: flex;
-	flex-direction: column;
-	border-bottom: 1px solid rgb(47,51,54);
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
 .errors {
 	color: red;	
+}
+
+.profileImg {
+	width: 50px;
+	height: 50px;
+}
+
+.profileImg2 {
+	width: 100px;
+	height: 100px;
+}
+
+a:link.tweetUserLink {
+	color: white;
+}
+
+.oneFollowItem {
+	color: white;
+}
+
+.profileUsersTopInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.followUnfollow {
+	flex: 1;
+	border-bottom: 1px solid rgb(47,51,54);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+/* 	padding-right: 100px;
+	padding-top: 100px; */
 }
 
 /* .notiContent2 {

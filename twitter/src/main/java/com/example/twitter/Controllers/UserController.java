@@ -1,5 +1,6 @@
 package com.example.twitter.Controllers;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.twitter.Models.Comment;
+import com.example.twitter.Models.FollowRelationship;
 import com.example.twitter.Models.LoginUser;
 import com.example.twitter.Models.Tweet;
 import com.example.twitter.Models.User;
@@ -25,6 +27,7 @@ import com.example.twitter.Services.UserService;
 
 @Controller
 public class UserController {
+	
 	
 	@Autowired
 	private UserService userServ;
@@ -49,15 +52,12 @@ public class UserController {
 	@PostMapping("/register/user")
 	public String registerUser(@Valid @ModelAttribute("newUser") User newUser, 
 			BindingResult result, Model model, HttpSession session) {
+		userServ.register(newUser, result);
 		if (result.hasErrors()) {
-//			model.addAttribute("newUser", new User());
 			return "register.jsp";
 		}
-		userServ.register(newUser, result);
-		newUser.setNotificationNum(0);
-		userServ.save(newUser);
-		session.setAttribute("userId", newUser.getId());
-		return "redirect:/home";
+			session.setAttribute("userId", newUser.getId());
+			return "redirect:/home";
 	}
 	
 	@GetMapping("/login")
@@ -71,7 +71,6 @@ public class UserController {
 			BindingResult result, Model model, HttpSession session) {
 		User user = userServ.login(newLogin, result);
 		if (result.hasErrors()) {
-//			model.addAttribute("newLoginUser", new LoginUser());
 			return "login.jsp";
 		}
 		session.setAttribute("userId", user.getId());
@@ -110,9 +109,16 @@ public class UserController {
 				}
 			}
 		}
-		System.out.println(unnotifiedComments);
 		model.addAttribute("count", count);
 		model.addAttribute("user", user);
+//		List<FollowRelationship> followedUsers = user.getFollowing();
+//		for (FollowRelationship followedUser : followedUsers) {
+//			User aFollowedUser = followedUser.getTo();
+//			User aFollowedUser = userServ.getById(followedUsersid);]
+//		}
+		
+		
+		
 		return "homePage.jsp";
 	}
 	
@@ -160,20 +166,24 @@ public class UserController {
 					commentServ.save(com);
 				}
 			}
-		System.out.println(unnotifiedComments);
 		model.addAttribute("count", count);
 		model.addAttribute("user", user);
 		return "homePage.jsp";
 	}
 	
 	@GetMapping("/user/profile/{usersId}")
-	public String userProfile(@PathVariable("usersId") Long userId, Model model, HttpSession session) {
+	public String userProfile(@PathVariable("usersId") Long userId, @ModelAttribute("aUser") User aUser, Model model, HttpSession session) {
 		Long theUserId = (Long) session.getAttribute("userId");
 		if (userServ.getById(theUserId) == null) {
 			return "redirect:/";
 		}
+		User theUser = userServ.getById(theUserId);
+		User nextUser = userServ.getById(userId);
+		
 		model.addAttribute("profileUser", userServ.getById(userId));
-		model.addAttribute("user", userServ.getById(theUserId));
+		model.addAttribute("user", theUser);
+
+		
 		return "userProfile.jsp";
 	}
 	
@@ -196,8 +206,90 @@ public class UserController {
 		
 		User aUser = userServ.getById(user.getId());
 		aUser.setBio(user.getBio());
-		System.out.println("user bio: " + user.getBio());
 		userServ.update(user);
 		return "redirect:/home";
+	}
+	
+//	@PostMapping("/user/follow/{usersId}")
+//	public String follow(@PathVariable("usersId") User follow, @Valid @ModelAttribute("aUser") User aUser, Model model, HttpSession session) {
+//		Long theUserId = (Long) session.getAttribute("userId");
+//		if (userServ.getById(theUserId) == null) {
+//			return "redirect:/";
+//		}
+//		User user = userServ.getById(theUserId);
+//		List<User> followers = user.getFollows();
+//		followers.add(follow);
+//		System.out.println(followers);
+//		return "redirect:/home";
+//	}
+	
+	
+	
+	@PostMapping("/user/follow/{usersId}")
+	public String follow(@PathVariable("usersId") Long followedUsersId, 
+			@Valid @ModelAttribute("aUser") User aUser, BindingResult result, 
+			Model model, HttpSession session) {
+
+		Long theUserId = (Long) session.getAttribute("userId");
+		if (userServ.getById(theUserId) == null) {
+			return "redirect:/";
+		}
+
+		User theUser = userServ.getById(theUserId);
+		User followedUser = userServ.getById(followedUsersId);
+		
+		userServ.follow(theUser, followedUser);
+		
+//		List<User> theUsersFollowList = theUser.getFollows();
+//		theUsersFollowList.add(followedUser);
+//		theUser.setFollows(theUsersFollowList);
+		
+		return "redirect:/user/profile/{usersId}";
+	}
+//	
+//	@PostMapping("/user/unfollow/{usersId}")
+//	public String unfollow(@PathVariable("usersId") Long followedUsersId,
+//			@Valid @ModelAttribute("aUser") User aUser, BindingResult result,
+//			Model model, HttpSession session) {
+//		
+//		Long theUserId = (Long) session.getAttribute("userId");
+//		if (userServ.getById(theUserId) == null) {
+//			return "redirect:/";
+//		}
+//		
+//		User theUser = userServ.getById(theUserId);
+//		User followedUser = userServ.getById(followedUsersId);
+//		
+//		userServ.unfollow(theUser, followedUser);
+//		
+//		return "redirect:/user/profile/{usersId}";
+//	}
+//	
+	@GetMapping("/user/follows/{usersId}")
+	public String whoUserFollows(@PathVariable("usersId") Long profileUsersId, 
+			Model model, HttpSession session) {
+		
+		Long theUserId = (Long) session.getAttribute("userId");
+		if (userServ.getById(theUserId) == null) {
+			return "redirect:/";
+		}
+		
+		User theUser = userServ.getById(theUserId);
+		model.addAttribute("profileUser", userServ.getById(profileUsersId));
+		
+		
+		List<FollowRelationship> followedUsers = theUser.getFollowing();
+		ArrayList<User> followedUserList = new ArrayList<>();
+		for (FollowRelationship followedUser : followedUsers) {
+			if (followedUser.getFrom() == userServ.getById(profileUsersId)) {
+				User aFollowedUser = followedUser.getTo();
+				followedUserList.add(aFollowedUser);				
+			}
+			
+			
+		}
+		
+		model.addAttribute("followedUsers", followedUserList);
+		return "followList.jsp";
 	}
 }

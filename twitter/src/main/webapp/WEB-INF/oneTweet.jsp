@@ -37,7 +37,7 @@
 				<div class="allTweets centerHome3Two oneTweetPage">
 					<div class="commentDiv">
 						<div class="commentContentPart3">
-						
+								<img class="profileImg" src="<c:url value='/img/user.svg' />" alt="Image" />						
 						</div>
 						<div class="commentContentPart">
 							<div>
@@ -65,9 +65,9 @@
 								<button style="border: none; background-color: black; color: white;"><i class="material-icons">delete</i></button>
 							</form:form>
 						</p>
-						<p>
+						<%-- <p>
 							<a href="/tweet/edit/${tweet.id}">Edit</a>
-						</p>
+						</p> --%>
 						</c:when>
 						</c:choose>
 					</div>
@@ -84,8 +84,8 @@
 						<hr style="border-color: rgb(47,51,54)">
 						<c:forEach var="comment" items="${tweet.comments}">
 						<div class="commentScroll">
-							<div class="commentLeft">
-								
+							<div class="commentLeft commentContentPart3">
+								<img class="profileImg" src="<c:url value='/img/user.svg' />" alt="Image" />
 							</div>
 							<div class="commentSection">
 								<p><c:out value="${comment.user.username}"/> | <span class="tweetDate"><fmt:formatDate value="${tweet.createdAt}" pattern="yy-MMM-dd"/></span>
